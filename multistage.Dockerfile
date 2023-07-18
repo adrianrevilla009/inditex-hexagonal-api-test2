@@ -12,4 +12,4 @@ WORKDIR /usr/src/app/
 COPY --from=builder /inditex-hexagonal-api-test/app/target/*.jar /usr/src/app/
 
 EXPOSE 8080
-CMD [ "java", "-jar", "api-test-0.0.1-SNAPSHOT.jar" ]
+CMD [ "java", "-jar", "api-test-1.0.0-RC.jar" ]

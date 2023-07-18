@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>inditex</groupId>
 	<artifactId>api-test</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-RC</version>
 	<name>inditex-hexagonal-api-test</name>
 	<description>Hexagonal arquitecture microservice for inditex code test</description>
 	<properties>

@@ -54,7 +54,7 @@ mvn clear build
 ```
 Then run the app:
 ```
-java -jar target_directory/api-test-0.0.1-SNAPSHOT.jar
+java -jar target_directory/api-test-1.0.0-RC.jar
 ```
 Then run any postman collection http request
 
