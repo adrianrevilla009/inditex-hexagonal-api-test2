@@ -1,0 +1,73 @@
+name: Master workflow
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+  workflow_dispatch:
+#    inputs:
+#      profile:
+#        description: 'Profile name'
+#        required: true
+#        default: 'Develop'
+
+jobs:
+  package:
+    name: Build Java application and run test
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    - name: Run test and package
+      run: mvn package
+
+
+  sonarqube-scan:
+    name: SonarQube analysis
+    needs: package
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: SonarScanner
+        run: sonar-scanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      
+  build-artifact-dockerhub:
+    name: Build Java application and push the artifact to docker hub
+    needs: package
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+          
+    - name: Generate Docker image version-v1
+      run: mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ secrets.DOCKERHUB_USERNAME }}/inditex-hexagonal-api-test:v1
+      
+    - name: Login to DockerHub
+      run: docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
+    - name: Push image version-dev to DockerHub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/inditex-hexagonal-api-test:v1
