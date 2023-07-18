@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "95e31078-9e32-4028-bb81-f09f7b8f6246",
+		"name": "inditex-test-hexagonal-api-2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11056725"
+	},
+	"item": [
+		{
+			"name": "Get by id, brand and date",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\": 35455,\r\n    \"brandId\": 1,\r\n    \"startDate\": \"2020-06-14 00:00:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{path}}/product/byBrandProductAndDate",
+					"host": [
+						"{{path}}"
+					],
+					"path": [
+						"product",
+						"byBrandProductAndDate"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "http://localhost:8080/inditex-api",
+			"type": "string"
+		}
+	]
+}
